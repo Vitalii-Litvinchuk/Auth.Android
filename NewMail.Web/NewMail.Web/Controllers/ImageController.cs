@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using NewMail.Web.Models;
 using NewMail.Web.Root;
 using System.Drawing;
-using TinifyAPI;
 
 namespace NewMail.Web.Controllers
 {
@@ -35,18 +34,7 @@ namespace NewMail.Web.Controllers
                 string file450x600 = Path.Combine(uploadsFolder, uniqueFileName + "(450x600.jpg");
                 string file690x920 = Path.Combine(uploadsFolder, uniqueFileName + "(690x920.jpg");
                 string file810x1080 = Path.Combine(uploadsFolder, uniqueFileName + "(810x1080.jpg");
-                #region Tinify
-                //Tinify.Key = "NZP8G8ktgRg169hGL5LHMHR1VmhjHQZn";  /// The first 500 compressions each month are free.
-                //string sOptimizedFile = uploadsFolder + "resized.jpg";
-                //var source = Tinify.FromFile(filePath);
-                //var resized = source.Resize(new
-                //{
-                //    method = "fit",
-                //    width = 150,
-                //    height = 150
-                //});
-                //await resized.ToFile(sOptimizedFile); 
-                #endregion
+
                 Bitmap tmpmap = new Bitmap(filePath);
                 Bitmap bmp = new Bitmap(tmpmap, 270, 360);
                 bmp.Save(file270x360);

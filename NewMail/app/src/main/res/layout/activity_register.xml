@@ -148,12 +148,40 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="28dp"
             android:onClick="handleClick"
             android:text="Реєструватися"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/myimg"
+            app:layout_constraintHorizontal_bias="0.472"
+            app:layout_constraintStart_toStartOf="@+id/myimg"
+            app:layout_constraintTop_toBottomOf="@+id/myimg" />
+
+        <ImageView
+            android:id="@+id/myimg"
+            android:layout_width="200dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="84dp"
+            app:layout_constraintEnd_toEndOf="@+id/BSelectImage"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/BSelectImage"
             app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+
+        <Button
+            android:id="@+id/BSelectImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:onClick="onSelectImage"
+            android:text="SELECT IMAGE"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintEnd_toEndOf="@+id/confirmPassword"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="@+id/confirmPassword"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
+            app:layout_constraintVertical_bias="0.121" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
