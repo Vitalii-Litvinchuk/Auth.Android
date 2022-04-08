@@ -142,8 +142,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--    Photo    -->
-
-
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
@@ -160,11 +158,21 @@
             android:id="@+id/myimg"
             android:layout_width="200dp"
             android:layout_height="120dp"
-            android:layout_marginTop="84dp"
+            android:layout_marginTop="120dp"
             app:layout_constraintEnd_toEndOf="@+id/BSelectImage"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/BSelectImage"
             app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+
+        <TextView
+            android:id="@+id/imgError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/myimg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/BSelectImage"
+            app:layout_constraintVertical_bias="0.8"></TextView>
 
         <Button
             android:id="@+id/BSelectImage"

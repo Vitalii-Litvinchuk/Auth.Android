@@ -31,12 +31,16 @@ namespace NewMail.Web.Validators
             //.Matches("^[^£# “”]*$").WithName("Password").WithMessage("Password must not contain the following characters £ # “” or spaces.");
 
             RuleFor(x => x.FirstName)
-                .NotEmpty().WithMessage("Поле пароль є обов'язковим!")
+                .NotEmpty().WithMessage("Поле ім'я є обов'язковим!")
                 .MinimumLength(2).WithMessage("Поле має мати міннімум 2 символів!");
 
             RuleFor(x => x.ConfirmPassword)
                 .NotEmpty().WithName("ConfirmPassword").WithMessage("Поле є обов'язковим!")
                  .Equal(x => x.Password).WithMessage("Поролі не співпадають!");
+
+            RuleFor(x => x.Photo)
+                .NotEmpty().WithName("Photo").WithMessage("Поле пароль є обов'язковим!")
+                .MinimumLength(300);
         }
         private bool BeUniqueEmail(string email)
         {
