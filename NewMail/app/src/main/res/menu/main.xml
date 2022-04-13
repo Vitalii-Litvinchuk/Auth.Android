@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/m_register"
-        android:title="Реєстрація"
+    <item
+        android:id="@+id/m_main"
+        android:title="Головна"
         app:showAsAction="never"/>
-    <item android:id="@+id/m_users"
-        android:title="Користувачі"
-        app:showAsAction="never"/>
+
+    <group android:id="@+id/groupAuth">
+        <item
+            android:id="@+id/m_register"
+            android:title="Реєстрація"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/m_login"
+            android:title="Логін"
+            app:showAsAction="never" />
+    </group>
+
+    <group
+        android:id="@+id/groupActions"
+        android:visible="false">
+        <item
+            android:id="@+id/m_users"
+            android:title="Користувачі"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/m_logout"
+            android:title="Вийти"
+            app:showAsAction="never" />
+    </group>
 </menu>

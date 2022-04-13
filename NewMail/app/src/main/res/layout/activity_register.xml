@@ -13,7 +13,7 @@
         tools:ignore="ExtraText">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -25,7 +25,7 @@
 
         <!--    Email    -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email"
+            android:id="@+id/emailRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -34,10 +34,10 @@
             android:hint="Електронна пошта"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView">
+            app:layout_constraintTop_toTopOf="@+id/textRegister">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtEmail"
+                android:id="@+id/txtEmailRegister"
                 android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -45,7 +45,7 @@
 
         <!--    First name    -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/firstName"
+            android:id="@+id/firstNameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -54,17 +54,17 @@
             android:hint="Ім'я"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/email">
+            app:layout_constraintTop_toTopOf="@+id/emailRegister">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtFirstName"
+                android:id="@+id/txtFirstNameRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--    Second name    -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/secondName"
+            android:id="@+id/secondNameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -73,17 +73,17 @@
             android:hint="Прізвище"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/firstName">
+            app:layout_constraintTop_toTopOf="@+id/firstNameRegister">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtSecondName"
+                android:id="@+id/txtSecondNameRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--    Phone    -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phone"
+            android:id="@+id/phoneRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -92,10 +92,10 @@
             android:hint="Номер телефону"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/secondName">
+            app:layout_constraintTop_toTopOf="@+id/secondNameRegister">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtPhone"
+                android:id="@+id/txtPhoneRegister"
                 android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -103,7 +103,7 @@
 
         <!--    Password    -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
+            android:id="@+id/passwordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -112,10 +112,10 @@
             android:hint="Пароль"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/phone">
+            app:layout_constraintTop_toTopOf="@+id/phoneRegister">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtPassword"
+                android:id="@+id/txtPasswordRegister"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -123,7 +123,7 @@
 
         <!--    Confirm password    -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confirmPassword"
+            android:id="@+id/confirmPasswordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -132,50 +132,60 @@
             android:hint="Підтвердіть пароль"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/password">
+            app:layout_constraintTop_toTopOf="@+id/passwordRegister">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtConfirmPassword"
+                android:id="@+id/txtConfirmPasswordRegister"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--    Photo    -->
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:onClick="handleClick"
             android:text="Реєструватися"
-            app:layout_constraintEnd_toEndOf="@+id/myimg"
-            app:layout_constraintHorizontal_bias="0.472"
-            app:layout_constraintStart_toStartOf="@+id/myimg"
-            app:layout_constraintTop_toBottomOf="@+id/myimg" />
+            app:layout_constraintEnd_toEndOf="@+id/myimgRegister"
+            app:layout_constraintStart_toStartOf="@+id/myimgRegister"
+            app:layout_constraintTop_toBottomOf="@+id/myimgRegister" />
+
+        <ProgressBar
+        android:id="@+id/progBarRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myimgRegister" />
 
         <ImageView
-            android:id="@+id/myimg"
+            android:id="@+id/myimgRegister"
             android:layout_width="200dp"
             android:layout_height="120dp"
             android:layout_marginTop="120dp"
-            app:layout_constraintEnd_toEndOf="@+id/BSelectImage"
-            app:layout_constraintStart_toStartOf="@+id/BSelectImage"
-            app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+            app:layout_constraintEnd_toEndOf="@+id/BSelectImageRegister"
+            app:layout_constraintStart_toStartOf="@+id/BSelectImageRegister"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordRegister" />
 
         <TextView
-            android:id="@+id/imgError"
+            android:id="@+id/imgErrorRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/myimg"
+            app:layout_constraintBottom_toTopOf="@+id/myimgRegister"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/BSelectImage"
+            app:layout_constraintTop_toTopOf="@+id/BSelectImageRegister"
             app:layout_constraintVertical_bias="0.8"></TextView>
 
+        <!--    Photo    -->
         <Button
-            android:id="@+id/BSelectImage"
+            android:id="@+id/BSelectImageRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -184,11 +194,11 @@
             android:text="SELECT IMAGE"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintEnd_toEndOf="@+id/confirmPassword"
+            app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+            app:layout_constraintEnd_toEndOf="@+id/confirmPasswordRegister"
             app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="@+id/confirmPassword"
-            app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
+            app:layout_constraintStart_toStartOf="@+id/confirmPasswordRegister"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordRegister"
             app:layout_constraintVertical_bias="0.121" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

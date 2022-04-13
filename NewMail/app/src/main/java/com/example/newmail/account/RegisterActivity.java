@@ -1,7 +1,5 @@
 package com.example.newmail.account;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,17 +7,23 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.newmail.MainActivity;
 import com.example.newmail.R;
+import com.example.newmail.application.HomeApplication;
+import com.example.newmail.constants.Methods;
 import com.example.newmail.constants.TextInputHelper;
 import com.example.newmail.constants.Validator;
-import com.example.newmail.network.request.DTOs.AccountDTOs.ErrorDTO;
+import com.example.newmail.simplification.EasierActivity;
 import com.example.newmail.network.request.DTOs.AccountDTOs.RegisterDTO;
-import com.example.newmail.network.request.DTOs.AccountDTOs.RegisterErrorDTO;
-import com.example.newmail.network.request.DTOs.AccountDTOs.RegisterResponseDTO;
+import com.example.newmail.network.request.DTOs.AccountDTOs.ErrorDTO;
+import com.example.newmail.network.request.DTOs.AccountDTOs.AccountResponseDTO;
 import com.example.newmail.network.request.RequestService;
+import com.example.newmail.security.JwtSecurityService;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
@@ -29,15 +33,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends EasierActivity {
+    TextView imgError;
+    ProgressBar progBar;
+    Button btn;
+
     TextInputHelper email;
     TextInputHelper firstName;
     TextInputHelper secondName;
     TextInputHelper phone;
     TextInputHelper password;
     TextInputHelper confirmPassword;
-    TextView imgError;
-
 
     private ImageView myImage;
     int SELECT_PICTURE = 200;
@@ -46,22 +52,26 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        email = new TextInputHelper(findViewById(R.id.email), findViewById(R.id.txtEmail));
-        firstName = new TextInputHelper(findViewById(R.id.firstName), findViewById(R.id.txtFirstName));
-        secondName = new TextInputHelper(findViewById(R.id.secondName), findViewById(R.id.txtSecondName));
-        phone = new TextInputHelper(findViewById(R.id.phone), findViewById(R.id.txtPhone));
-        password = new TextInputHelper(findViewById(R.id.password), findViewById(R.id.txtPassword));
-        confirmPassword = new TextInputHelper(findViewById(R.id.confirmPassword), findViewById(R.id.txtConfirmPassword));
+        imgError = findViewById(R.id.imgErrorRegister);
+        myImage = findViewById(R.id.myimgRegister);
 
-        imgError = findViewById(R.id.imgError);
-        myImage = findViewById(R.id.myimg);
+        progBar = findViewById(R.id.progBarRegister);
+        btn = findViewById(R.id.buttonRegister);
+
+
+        email = new TextInputHelper(findViewById(R.id.emailRegister), findViewById(R.id.txtEmailRegister));
+        firstName = new TextInputHelper(findViewById(R.id.firstNameRegister), findViewById(R.id.txtFirstNameRegister));
+        secondName = new TextInputHelper(findViewById(R.id.secondNameRegister), findViewById(R.id.txtSecondNameRegister));
+        phone = new TextInputHelper(findViewById(R.id.phoneRegister), findViewById(R.id.txtPhoneRegister));
+        password = new TextInputHelper(findViewById(R.id.passwordRegister), findViewById(R.id.txtPasswordRegister));
+        confirmPassword = new TextInputHelper(findViewById(R.id.confirmPasswordRegister), findViewById(R.id.txtConfirmPasswordRegister));
+
     }
 
     String photoBase64 = "";
 
     public void handleClick(View view) {
         boolean validData = true;
-
         if (!Validator.emailValidate(email.editText.getText().toString())) {
             email.layout.setError("Вкажіть пошту правильно");
             validData = false;
@@ -93,44 +103,47 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
-        if (!validData && photoBase64.isEmpty() &&
-                firstName.editText.getText().toString().isEmpty() &&
-                secondName.editText.getText().toString().isEmpty()) return;
+        if (validData) {
+            Methods.enableProgressBarWithButton(progBar, btn);
+            RegisterDTO registerDTO = new RegisterDTO();
 
-        RegisterDTO registerDTO = new RegisterDTO();
+            registerDTO.setEmail(email.editText.getText().toString());
+            registerDTO.setPhone(phone.editText.getText().toString());
+            registerDTO.setFirstName(firstName.editText.getText().toString());
+            registerDTO.setSecondName(secondName.editText.getText().toString());
+            registerDTO.setPhoto(photoBase64);
+            registerDTO.setPassword(password1);
+            registerDTO.setConfirmPassword(confirmPassword1);
+            RequestService.getInstance().jsonAccountApi().register(registerDTO)
+                    .enqueue(new Callback<AccountResponseDTO>() {
+                        @Override
+                        public void onResponse(Call<AccountResponseDTO> call, Response<AccountResponseDTO> response) {
+                            if (response.isSuccessful()) {
+                                AccountResponseDTO data = response.body();
+                                String token = data.getToken();
 
-        registerDTO.setEmail(email.editText.getText().toString());
-        registerDTO.setPhone(phone.editText.getText().toString());
-        registerDTO.setFirstName(firstName.editText.getText().toString());
-        registerDTO.setSecondName(secondName.editText.getText().toString());
-        registerDTO.setPhoto(photoBase64);
-        registerDTO.setPassword(password1);
-        registerDTO.setConfirmPassword(confirmPassword1);
+                                JwtSecurityService jwtService = (JwtSecurityService) HomeApplication.getInstance();
+                                jwtService.saveJwtToken(data.getToken());
+                                auth();
+                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                try {
+                                    String json = response.errorBody().string();
+                                    jsonError(json);
+                                    Methods.disableProgressBarWithButton(progBar, btn);
+                                } catch (Exception ex) {
 
-        RequestService.getInstance().jsonAccountApi().register(registerDTO)
-                .enqueue(new Callback<RegisterResponseDTO>() {
-                    @Override
-                    public void onResponse(Call<RegisterResponseDTO> call, Response<RegisterResponseDTO> response) {
-                        if (response.isSuccessful()) {
-                            RegisterResponseDTO data = response.body();
-                            Intent intent = new Intent(RegisterActivity.this ,UsersActivity.class);
-                            startActivity(intent);
-                        } else {
-                            try {
-                                String json = response.errorBody().string();
-                                jsonError(json);
-                            } catch (Exception ex) {
-
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<RegisterResponseDTO> call, Throwable t) {
-                        String str = t.toString();
-                        int a = 12;
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<AccountResponseDTO> call, Throwable t) {
+                        }
+                    });
+        }
     }
 
     public void onSelectImage(View view) {
@@ -169,7 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void jsonError(String json) {
         Gson g = new Gson();
-        RegisterErrorDTO error = g.fromJson(json, RegisterErrorDTO.class);
+        ErrorDTO error = g.fromJson(json, ErrorDTO.class);
 
         String[] emailError = error.getErrors().getEmail();
         if (emailError != null) {
@@ -195,6 +208,5 @@ public class RegisterActivity extends AppCompatActivity {
         if (photoError != null) {
             imgError.setError(photoError[0]);
         } else imgError.setError(null);
-
     }
 }

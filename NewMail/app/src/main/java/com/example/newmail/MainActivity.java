@@ -1,25 +1,19 @@
 package com.example.newmail;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.UserDictionary;
 import android.util.Base64;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.example.newmail.account.RegisterActivity;
-import com.example.newmail.account.UsersActivity;
+import com.example.newmail.application.HomeApplication;
 import com.example.newmail.constants.Urls;
+import com.example.newmail.simplification.EasierActivity;
 import com.example.newmail.network.ImageRequester;
 import com.example.newmail.network.request.DTOs.ImageDTOs.ImageDTO;
 import com.example.newmail.network.request.DTOs.ImageDTOs.ImageResponseDTO;
@@ -32,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends EasierActivity {
     private ImageRequester imageRequester;
     private NetworkImageView myImage;
     // constant to compare
@@ -47,36 +41,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageRequester = ImageRequester.getInstance();
-        myImage = findViewById(R.id.myimg);
+        myImage = findViewById(R.id.myimgRegister);
         String urlImg = Urls.BASE + "/images/1.jpg";
         imageRequester.setImageFromUrl(myImage, urlImg);
-
+//        HomeApplication.getInstance().deleteToken();
         IVPreviewImage = findViewById(R.id.IVPreviewImage);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.m_register:
-                intent = new Intent(this, RegisterActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.m_users:
-                intent = new Intent(this, UsersActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
+        if (HomeApplication.getInstance().isAuth())
+            RequestService.setInstanceAuthorization(HomeApplication.getInstance().getToken());
     }
 
     public void onSelectImage(View view) {
@@ -138,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<ImageResponseDTO> call, Throwable t) { }
+                            public void onFailure(Call<ImageResponseDTO> call, Throwable t) {
+                            }
                         });
             }
         }

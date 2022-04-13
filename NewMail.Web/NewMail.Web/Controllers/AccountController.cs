@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewMail.Web.Data;
@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 
 namespace NewMail.Web.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/account")]
     public class AccountController : ControllerBase
@@ -18,6 +19,7 @@ namespace NewMail.Web.Controllers
         private readonly IMapper _mapper;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly UserManager<AppUser> _userManager;
+
         //private readonly ILogger<AccountController> _logger;
         private readonly AppEFContext _context;
         public AccountController(UserManager<AppUser> userManager,
@@ -30,6 +32,7 @@ namespace NewMail.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
@@ -48,6 +51,24 @@ namespace NewMail.Web.Controllers
             return Ok(new { token = _jwtTokenService.CreateToken(user) });
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null)
+            {
+                if (await _userManager.CheckPasswordAsync(user, model.Password))
+                {
+                    return Ok(new { token = _jwtTokenService.CreateToken(user) });
+                }
+            }
+            return BadRequest(new { errors =  new { global = "Авторизація неуспішна" } });
+        }
+
+
+
         [HttpGet]
         [Route("users")]
         public async Task<IActionResult> Users()
@@ -56,5 +77,7 @@ namespace NewMail.Web.Controllers
 
             return Ok(new { users = list });
         }
+
+
     }
 }
