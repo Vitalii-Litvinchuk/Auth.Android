@@ -75,11 +75,9 @@ public class LoginActivity extends EasierActivity {
                                     String token = data.getToken();
 
                                     JwtSecurityService jwtService = (JwtSecurityService) HomeApplication.getInstance();
-                                    jwtService.saveJwtToken(data.getToken());
+                                    jwtService.saveJwtToken(token);
                                     auth();
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    openMainActivity();
                                 } else {
                                     try {
                                         String json = response.errorBody().string();

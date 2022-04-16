@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".account.NoInternetActivity">
+
+    <TextView
+        android:id="@+id/No_Internet_Connection_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="No internet connection"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/No_Internet_Connection_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:onClick="tryRestoreActivities"
+        android:text="Try again"
+        app:layout_constraintEnd_toEndOf="@+id/No_Internet_Connection_txt"
+        app:layout_constraintStart_toStartOf="@+id/No_Internet_Connection_txt"
+        app:layout_constraintTop_toBottomOf="@+id/No_Internet_Connection_txt" />
+
+    <TextView
+        android:id="@+id/Error_Internet_Connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/No_Internet_Connection_btn"
+        app:layout_constraintEnd_toEndOf="@+id/No_Internet_Connection_txt"
+        app:layout_constraintStart_toStartOf="@+id/No_Internet_Connection_txt"
+        app:layout_constraintTop_toBottomOf="@+id/No_Internet_Connection_txt" />
+</androidx.constraintlayout.widget.ConstraintLayout>

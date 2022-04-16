@@ -6,13 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.example.newmail.application.HomeApplication;
 import com.example.newmail.constants.Urls;
+import com.example.newmail.network.ConnectionDetector;
 import com.example.newmail.simplification.EasierActivity;
 import com.example.newmail.network.ImageRequester;
 import com.example.newmail.network.request.DTOs.ImageDTOs.ImageDTO;
@@ -29,6 +28,7 @@ import retrofit2.Response;
 public class MainActivity extends EasierActivity {
     private ImageRequester imageRequester;
     private NetworkImageView myImage;
+
     // constant to compare
     // the activity result code
     int SELECT_PICTURE = 200;
@@ -46,8 +46,6 @@ public class MainActivity extends EasierActivity {
         imageRequester.setImageFromUrl(myImage, urlImg);
 //        HomeApplication.getInstance().deleteToken();
         IVPreviewImage = findViewById(R.id.IVPreviewImage);
-        if (HomeApplication.getInstance().isAuth())
-            RequestService.setInstanceAuthorization(HomeApplication.getInstance().getToken());
     }
 
     public void onSelectImage(View view) {

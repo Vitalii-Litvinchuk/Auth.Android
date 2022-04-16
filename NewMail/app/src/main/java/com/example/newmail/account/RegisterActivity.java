@@ -25,6 +25,7 @@ import com.example.newmail.network.request.DTOs.AccountDTOs.AccountResponseDTO;
 import com.example.newmail.network.request.RequestService;
 import com.example.newmail.security.JwtSecurityService;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -123,11 +124,9 @@ public class RegisterActivity extends EasierActivity {
                                 String token = data.getToken();
 
                                 JwtSecurityService jwtService = (JwtSecurityService) HomeApplication.getInstance();
-                                jwtService.saveJwtToken(data.getToken());
+                                jwtService.saveJwtToken(token);
                                 auth();
-                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                openMainActivity();
                             } else {
                                 try {
                                     String json = response.errorBody().string();
@@ -154,7 +153,6 @@ public class RegisterActivity extends EasierActivity {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
-
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
     }
 
@@ -164,12 +162,24 @@ public class RegisterActivity extends EasierActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri uri = data.getData();
+
                 Bitmap bitmap = null;
+
                 try {
-                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    bitmap = Picasso.get()
+                            .load(uri)
+                                                   .resize(100, 100)
+//                            .centerCrop()
+                            .get();
                 } catch (IOException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
+
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] bytes = stream.toByteArray();
