@@ -25,13 +25,6 @@ DirectoryService.rootDirectory = Directory.GetCurrentDirectory();
 builder.Services.AddDbContext<AppEFContext>(options =>
    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Host.ConfigureLogging(logging =>
-{
-    logging.ClearProviders();
-    logging.SetMinimumLevel(LogLevel.Warning);
-    logging.AddConsole();
-});
-
 // Add services to the container.
 
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
@@ -122,7 +115,6 @@ using (var scope = app.Services.CreateScope())
     var loggerFactory = services.GetRequiredService<ILoggerFactory>();
     // other code remove for clarity 
     loggerFactory.AddFile("Logs/mylog-{Date}.txt");
-
 }
 
 // Configure the HTTP request pipeline.
