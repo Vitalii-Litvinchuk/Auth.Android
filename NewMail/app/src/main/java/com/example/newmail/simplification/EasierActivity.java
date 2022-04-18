@@ -1,10 +1,12 @@
 package com.example.newmail.simplification;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newmail.MainActivity;
@@ -17,16 +19,36 @@ import com.example.newmail.application.HomeApplication;
 import com.example.newmail.network.ConnectionDetector;
 
 public class EasierActivity extends AppCompatActivity {
-    private Menu menu;
     private static int openedId = R.id.m_main;
     private static boolean isGroupAuthVisible = !HomeApplication.getInstance().isAuth();
     private static boolean isGroupActionVisible = HomeApplication.getInstance().isAuth();
+    private int Id = R.id.m_main;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        String classname  = getClass().getName();
+        switch  (classname){
+            case "com.example.newmail.MainActivity":
+                Id = R.id.m_main;
+                break;
+            case "com.example.newmail.account.LoginActivity":
+                Id = R.id.m_login;
+                break;
+            case "com.example.newmail.account.RegisterActivity":
+                Id = R.id.m_register;
+                break;
+            case "com.example.newmail.account.UsersActivity":
+                Id = R.id.m_users;
+                break;
+        }
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         ConnectionDetector cd = new ConnectionDetector(this);
-        if (!cd.isConnectingToInternet() && hasFocus){
+        if (!cd.isConnectingToInternet() && hasFocus) {
             Intent intent = new Intent(this, NoInternetActivity.class);
             startActivity(intent);
         }
@@ -36,14 +58,13 @@ public class EasierActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        this.menu = menu;
         return true;
     }
 
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         setGroupsVisible(menu);
-        menu.findItem(openedId).setVisible(false);
+        menu.findItem(Id).setVisible(false);
         return true;
     }
 
@@ -71,6 +92,8 @@ public class EasierActivity extends AppCompatActivity {
     }
 
     public void setGroupsVisible(Menu menu) {
+        for (int i = 0; i < menu.size(); ++i)
+            menu.getItem(i).setVisible(true);
         menu.setGroupVisible(R.id.groupAuth, isGroupAuthVisible);
         menu.setGroupVisible(R.id.groupActions, isGroupActionVisible);
     }
@@ -112,9 +135,9 @@ public class EasierActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.m_logout:
+                openMainActivity();
                 openedId = R.id.m_main;
                 logout();
-                openMainActivity();
                 return true;
             case R.id.m_main:
                 openedId = R.id.m_main;

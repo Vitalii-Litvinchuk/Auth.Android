@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewMail.Web.Data;
@@ -31,6 +32,15 @@ namespace NewMail.Web.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Реєстрація [Unauthorize]
+        /// </summary>
+        /// <param name="model">Пошта, ім'я, прізвище, фотографія (base64), номер телефону, пароль, повторний пароль</param>
+        /// <returns>Jwt token sha256</returns>
+        // <response code="500">Помилка сервера</response>
+        // <remarks>Awesomeness!</remarks>
+        // <response code="200">Register user</response>
+        // <response code="400">Register has missing/invalid values</response>
         [HttpPost]
         [AllowAnonymous]
         [Route("register")]
@@ -51,6 +61,11 @@ namespace NewMail.Web.Controllers
             return Ok(new { token = _jwtTokenService.CreateToken(user) });
         }
 
+        /// <summary>
+        /// Вхід [Unauthorize]
+        /// </summary>
+        /// <param name="model">Пошта, пароль</param>
+        /// <returns>Jwt token sha256</returns>
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
@@ -64,11 +79,14 @@ namespace NewMail.Web.Controllers
                     return Ok(new { token = _jwtTokenService.CreateToken(user) });
                 }
             }
-            return BadRequest(new { errors =  new { global = "Авторизація неуспішна" } });
+            return BadRequest(new { errors = new { global = "Авторизація неуспішна" } });
         }
 
-
-
+        /// <summary>
+        /// Вивід користувачів [Authorize]
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Всі користувачі</returns>
         [HttpGet]
         [Route("users")]
         public async Task<IActionResult> Users()
@@ -78,6 +96,19 @@ namespace NewMail.Web.Controllers
             return Ok(new { users = list });
         }
 
-
+        // Global handler
+        //[Route("error")]
+        //[AllowAnonymous]
+        //[ApiExplorerSettings(IgnoreApi = true)]
+        //public async Task<IActionResult> HadlerError()
+        //{
+        //    return BadRequest(new
+        //    {
+        //        errors = new
+        //        {
+        //            global = HttpContext.Features.Get<IExceptionHandlerFeature>().Error.Message
+        //        }
+        //    });
+        //}
     }
 }

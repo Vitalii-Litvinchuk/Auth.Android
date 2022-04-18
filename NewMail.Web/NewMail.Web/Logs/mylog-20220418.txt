@@ -1,0 +1,27 @@
+2022-04-18T22:48:19.3364807+03:00  [INF] Entity Framework Core "6.0.3" initialized '"AppEFContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL":"6.0.3+94d0a8eaeb9cf5af6ce55a9e59153c1a1be3244f"' with options: "None" (d2805559)
+2022-04-18T22:48:19.6829907+03:00  [INF] Executed DbCommand ("47"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT EXISTS (
+    SELECT 1
+    FROM \"AspNetRoles\" AS a)" (0723d8ff)
+2022-04-18T22:48:19.7761653+03:00  [INF] Now listening on: "http://127.0.0.1:5233" (d826f4b8)
+2022-04-18T22:48:19.7791688+03:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2022-04-18T22:48:19.7792448+03:00  [INF] Hosting environment: "Development" (c3307c92)
+2022-04-18T22:48:19.7792654+03:00  [INF] Content root path: "E:\AndroidApps\AndroidNewMail\NewMail.Web\NewMail.Web\" (b5d60022)
+2022-04-18T22:51:02.8033979+03:00  [INF] Entity Framework Core "6.0.3" initialized '"AppEFContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL":"6.0.3+94d0a8eaeb9cf5af6ce55a9e59153c1a1be3244f"' with options: "None" (d2805559)
+2022-04-18T22:51:03.1288905+03:00  [INF] Executed DbCommand ("44"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT EXISTS (
+    SELECT 1
+    FROM \"AspNetRoles\" AS a)" (0723d8ff)
+2022-04-18T22:51:03.2194203+03:00  [INF] Now listening on: "http://127.0.0.1:5233" (d826f4b8)
+2022-04-18T22:51:03.2218801+03:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2022-04-18T22:51:03.2219709+03:00  [INF] Hosting environment: "Development" (c3307c92)
+2022-04-18T22:51:03.2219953+03:00  [INF] Content root path: "E:\AndroidApps\AndroidNewMail\NewMail.Web\NewMail.Web\" (b5d60022)
+2022-04-18T22:51:59.1491020+03:00  [INF] Entity Framework Core "6.0.3" initialized '"AppEFContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL":"6.0.3+94d0a8eaeb9cf5af6ce55a9e59153c1a1be3244f"' with options: "None" (d2805559)
+2022-04-18T22:51:59.4749660+03:00  [INF] Executed DbCommand ("47"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT EXISTS (
+    SELECT 1
+    FROM \"AspNetRoles\" AS a)" (0723d8ff)
+2022-04-18T22:51:59.5619563+03:00  [INF] Now listening on: "http://127.0.0.1:5233" (d826f4b8)
+2022-04-18T22:51:59.5642221+03:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2022-04-18T22:51:59.5642750+03:00  [INF] Hosting environment: "Development" (c3307c92)
+2022-04-18T22:51:59.5642931+03:00  [INF] Content root path: "E:\AndroidApps\AndroidNewMail\NewMail.Web\NewMail.Web\" (b5d60022)

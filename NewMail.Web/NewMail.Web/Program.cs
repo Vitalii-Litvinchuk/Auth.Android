@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -12,12 +13,24 @@ using NewMail.Web.Root;
 using NewMail.Web.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+
+DirectoryService.rootDirectory = Directory.GetCurrentDirectory();
+
 builder.Services.AddDbContext<AppEFContext>(options =>
    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.SetMinimumLevel(LogLevel.Warning);
+    logging.AddConsole();
+});
 
 // Add services to the container.
 
@@ -44,6 +57,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Include;
     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 });
+
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -73,7 +87,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "NewMail.Web", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = assemblyName, Version = "v1" });
     c.AddSecurityDefinition("Bearer",
         new OpenApiSecurityScheme
         {
@@ -91,18 +105,47 @@ builder.Services.AddSwaggerGen(c =>
                         },new List<string>()
                     }
                 });
+    var fileDoc = Path.Combine(System.AppContext.BaseDirectory, $"{assemblyName}.xml");
+    c.IncludeXmlComments(fileDoc);
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var path = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
+    if (!Directory.Exists(path))
+    {
+        Directory.CreateDirectory(path);
+    }
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    // other code remove for clarity 
+    loggerFactory.AddFile("Logs/mylog-{Date}.txt");
+
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{assemblyName} v1"));
 }
 
-DirectoryService.rootDirectory = Directory.GetCurrentDirectory();
+// Handler in controller [Global]
+//app.UseExceptionHandler("/api/account/error");
+app.UseExceptionHandler(new ExceptionHandlerOptions
+{
+    ExceptionHandler = async (c) =>
+    {
+        if (c.Response.StatusCode == StatusCodes.Status500InternalServerError)
+        {
+            c.Response.StatusCode = 400;
+            await c.Response.WriteAsJsonAsync(new { errors = new { global = c.Features.Get<IExceptionHandlerFeature>().Error.Message } });
+        }
+    }
+});
+
 var dir = Path.Combine(DirectoryService.rootDirectory, "uploads");
 
 if (!Directory.Exists(dir))
@@ -117,7 +160,9 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseAuthentication();
 app.UseAuthorization();
-    
+
+app.SeedData();
+
 app.MapControllers();
 
 app.Run();
