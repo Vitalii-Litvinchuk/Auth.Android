@@ -95,20 +95,5 @@ namespace NewMail.Web.Controllers
 
             return Ok(new { users = list });
         }
-
-        // Global handler
-        //[Route("error")]
-        //[AllowAnonymous]
-        //[ApiExplorerSettings(IgnoreApi = true)]
-        //public async Task<IActionResult> HadlerError()
-        //{
-        //    return BadRequest(new
-        //    {
-        //        errors = new
-        //        {
-        //            global = HttpContext.Features.Get<IExceptionHandlerFeature>().Error.Message
-        //        }
-        //    });
-        //}
     }
 }

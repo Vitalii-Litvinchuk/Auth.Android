@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using NewMail.Web.Data.Entities.Identity;
 using NewMail.Web.Root;
 
@@ -8,16 +9,18 @@ namespace NewMail.Web.Data
     {
         public static void SeedData(this IApplicationBuilder app)
         {
-            using (var scope =
-                app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                 try
                 {
+                    logger.LogInformation("Database initialization success");
+                    var context = scope.ServiceProvider.GetRequiredService<AppEFContext>();
+                    context.Database.Migrate();
                     InitRoleAndUsers(scope);
                 }
                 catch (Exception ex)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                     logger.LogError("Problem seed database " + ex.Message);
 
                 }
@@ -43,6 +46,31 @@ namespace NewMail.Web.Data
                 {
                     Name = Roles.User
                 }).Result;
+
+            }
+            if (!userManager.Users.Any())
+            {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<RoleManager<AppUser>>>();
+                string email = "qwerty@qwe.rty";
+                var user = new AppUser
+                {
+                    Email = email,
+                    UserName = email,
+                    FirstName = "Qwerty",
+                    SecondName = "Qwerty",
+                    PhoneNumber = "+38(098)232 34 22",
+                    Photo = "1.jpg"
+                };
+                var result = userManager.CreateAsync(user, "qwerty").Result;
+                if (result.Succeeded)
+                {
+                    logger.LogWarning("Create user " + user.UserName);
+                    result = userManager.AddToRoleAsync(user, Roles.Admin).Result;
+                }
+                else
+                {
+                    logger.LogError("Faild create user " + user.UserName);
+                }
             }
         }
     }
