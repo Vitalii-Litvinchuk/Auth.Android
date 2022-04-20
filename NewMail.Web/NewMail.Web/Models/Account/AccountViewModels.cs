@@ -15,7 +15,7 @@
         /// </summary>
         public string SecondName { get; set; }
         /// <summary>
-        /// Фотографія (ім'я файлу) користувача
+        /// Фотографія (base64) користувача
         /// </summary>
         public string Photo { get; set; }
         /// <summary>

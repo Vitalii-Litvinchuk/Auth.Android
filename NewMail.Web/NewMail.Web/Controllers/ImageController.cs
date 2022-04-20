@@ -18,6 +18,11 @@ namespace NewMail.Web.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Завантаження фотографії
+        /// </summary>
+        /// <param name="image">base64</param>
+        /// <returns>Ім'я файлу на сервері</returns>
         [HttpPost("upload")]
         public async Task<IActionResult> UploadImage([FromBody] ImageUpload image)
         {
@@ -27,7 +32,7 @@ namespace NewMail.Web.Controllers
                 string uploadsFolder = Path.Combine(DirectoryService.rootDirectory, "uploads");
                 uniqueFileName = Guid.NewGuid().ToString();
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName + ".jpg");
-                var bytes = Convert.FromBase64String(image.image);
+                var bytes = Convert.FromBase64String(image.Image);
                 System.IO.File.WriteAllBytes(filePath, bytes);
 
                 string file270x360 = Path.Combine(uploadsFolder, uniqueFileName + "(270x360.jpg");

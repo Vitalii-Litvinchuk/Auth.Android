@@ -2,7 +2,9 @@
 {
     public class ImageUpload
     {
-
-        public string image { get; set; }
+        /// <summary>
+        /// Фотографія (base64)
+        /// </summary>
+        public string Image { get; set; }
     }
 }

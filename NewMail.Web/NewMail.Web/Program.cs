@@ -54,6 +54,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<String>("JwtKey")));
 
 builder.Services.AddAuthentication(options =>
@@ -158,3 +159,4 @@ app.SeedData();
 app.MapControllers();
 
 app.Run();
+    
