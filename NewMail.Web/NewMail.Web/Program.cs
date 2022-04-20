@@ -59,18 +59,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{assemblyName} v1"));
 }
 
-var dir = Path.Combine(DirectoryService.rootDirectory, "uploads");
-
-if (!Directory.Exists(dir))
-{
-    Directory.CreateDirectory(dir);
-}
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(dir),
-    RequestPath = "/images"
-});
-
 app.UseAuthentication();
 app.UseAuthorization();
 
