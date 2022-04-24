@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewMail.Web.Data;
@@ -83,6 +82,51 @@ namespace NewMail.Web.Controllers
         }
 
         /// <summary>
+        /// Змінити дані користувача [Authorize]
+        /// </summary>
+        /// <param name="model">Параметри для зміни</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidDataException"></exception>
+        [HttpPut]
+        [Route("edit")]
+        public async Task<IActionResult> Edit([FromBody] EditUser model)
+        {
+            if (model != null)
+            {
+                var user = await _context.Users.FindAsync(long.Parse(model.Id));
+                if (user != null)
+                {
+                    if (!String.IsNullOrEmpty(model.FirstName) && !user.FirstName.Equals(model.FirstName))
+                        user.FirstName = model.FirstName;
+
+                    if (!String.IsNullOrEmpty(model.SecondName) && !user.SecondName.Equals(model.SecondName))
+                        user.SecondName = model.SecondName;
+
+                    if (!String.IsNullOrEmpty(model.Photo) && !(model.Photo.Split("/").Length > 1))
+                    {
+                        var img = ImageWorker.FromBase64StringToImage(model.Photo);
+                        string randomFilename = Path.GetRandomFileName() + ".jpeg";
+                        var dir = Path.Combine(Directory.GetCurrentDirectory(), "uploads", randomFilename);
+                        img.Save(dir, ImageFormat.Jpeg);
+
+                        //var dirDelete = Path.Combine(Directory.GetCurrentDirectory(), "uploads", user.Photo);
+                        //System.IO.File.Delete(dirDelete);
+
+                        user.Photo = randomFilename;
+                    }
+
+                    if (!String.IsNullOrEmpty(model.Phone) && !user.PhoneNumber.Equals(model.Phone))
+                        user.PhoneNumber = model.Phone;
+
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+                    return Ok(new { message = "Успішно змінено" });
+                }
+            }
+            throw new InvalidDataException();
+        }
+
+        /// <summary>
         /// Вивід користувачів [Authorize]
         /// </summary>
         /// <param name="model"></param>
@@ -95,5 +139,18 @@ namespace NewMail.Web.Controllers
 
             return Ok(new { users = list });
         }
+
+        /// <summary>
+        /// Дані користувача [Authorize]
+        /// </summary>
+        /// <returns>UserItemViewModel</returns>
+        [HttpGet]
+        [Route("user/{id}")]
+        public async Task<IActionResult> User(string id)
+        {
+            var user = _mapper.Map<EditUser>( await _context.Users.FindAsync(long.Parse(id)));
+            return Ok(new { user = user });
+        }
+
     }
 }

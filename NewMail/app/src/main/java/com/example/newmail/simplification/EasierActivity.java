@@ -22,12 +22,12 @@ public class EasierActivity extends AppCompatActivity {
     private static int openedId = R.id.m_main;
     private static boolean isGroupAuthVisible = !HomeApplication.getInstance().isAuth();
     private static boolean isGroupActionVisible = HomeApplication.getInstance().isAuth();
-    private int Id = R.id.m_main;
+    private int Id = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        String classname  = getClass().getName();
-        switch  (classname){
+        String classname = getClass().getName();
+        switch (classname) {
             case "com.example.newmail.MainActivity":
                 Id = R.id.m_main;
                 break;
@@ -39,6 +39,9 @@ public class EasierActivity extends AppCompatActivity {
                 break;
             case "com.example.newmail.account.UsersActivity":
                 Id = R.id.m_users;
+                break;
+            default:
+                Id = 0;
                 break;
         }
         super.onCreate(savedInstanceState);
@@ -64,7 +67,8 @@ public class EasierActivity extends AppCompatActivity {
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         setGroupsVisible(menu);
-        menu.findItem(Id).setVisible(false);
+        if (Id != 0)
+            menu.findItem(Id).setVisible(false);
         return true;
     }
 

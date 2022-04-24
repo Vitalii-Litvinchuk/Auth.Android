@@ -4,12 +4,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.newmail.R;
-import com.example.newmail.UserView.UserAdapter;
+import com.example.newmail.UserView.UsersAdapter;
+import com.example.newmail.application.HomeApplication;
+import com.example.newmail.network.request.DTOs.AccountDTOs.UserDTO;
 import com.example.newmail.simplification.EasierActivity;
-import com.example.newmail.network.request.DTOs.AccountDTOs.UserResponseDTO;
+import com.example.newmail.network.request.DTOs.AccountDTOs.UsersResponseDTO;
 import com.example.newmail.network.request.RequestService;
 
 import retrofit2.Call;
@@ -18,7 +22,7 @@ import retrofit2.Response;
 
 public class UsersActivity extends EasierActivity {
 
-    private UserAdapter adapter;
+    private UsersAdapter adapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -35,18 +39,40 @@ public class UsersActivity extends EasierActivity {
     }
 
     private void buildUsers() {
-            RequestService.getInstance().jsonAccountApi().users()
-                    .enqueue(new Callback<UserResponseDTO>() {
-                        @Override
-                        public void onResponse(Call<UserResponseDTO> call, Response<UserResponseDTO> response) {
-                            UserResponseDTO data = response.body();
-                            adapter = new UserAdapter(data.getUsers());
-                            recyclerView.setAdapter(adapter);
-                        }
+        RequestService.getInstance().jsonAccountApi().users()
+                .enqueue(new Callback<UsersResponseDTO>() {
+                    @Override
+                    public void onResponse(Call<UsersResponseDTO> call, Response<UsersResponseDTO> response) {
+                        UsersResponseDTO data = response.body();
+                        adapter = new UsersAdapter(data.getUsers(),
+                                UsersActivity.this::onClickByItem,
+                                UsersActivity.this::onClickEditUser);
+                        recyclerView.setAdapter(adapter);
+                    }
 
-                        @Override
-                        public void onFailure(Call<UserResponseDTO> call, Throwable t) {
-                        }
-                    });
+                    @Override
+                    public void onFailure(Call<UsersResponseDTO> call, Throwable t) {
+                    }
+                });
+    }
+
+    private void onClickByItem(UserDTO user) {
+//        Toast.makeText(HomeApplication.getAppContext(), user.getEmail(), Toast.LENGTH_LONG).show();
+        Intent intent;
+        intent = new Intent(this, ViewUserActivity.class);
+        Bundle b = new Bundle();
+        b.putLong("userId", user.getId());
+        intent.putExtras(b); //Put your id to your next Intent
+        startActivity(intent);
+    }
+
+    private void onClickEditUser(UserDTO user) {
+//        Toast.makeText(HomeApplication.getAppContext(), "EditUser "+user.getEmail(), Toast.LENGTH_LONG).show();
+        Intent intent;
+        intent = new Intent(this, EditUserActivity.class);
+        Bundle b = new Bundle();
+        b.putLong("userId", user.getId());
+        intent.putExtras(b); //Put your id to your next Intent
+        startActivity(intent);
     }
 }

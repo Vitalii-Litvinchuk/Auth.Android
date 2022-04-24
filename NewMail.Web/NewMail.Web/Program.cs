@@ -1,19 +1,11 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using NewMail.Web.AppInit;
 using NewMail.Web.Data;
 using NewMail.Web.Helpers;
-using NewMail.Web.Mapper;
 using NewMail.Web.Middleware;
 using NewMail.Web.Root;
-using NewMail.Web.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{assemblyName} v1"));
 }
 
+app.UseAppStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -67,4 +61,3 @@ app.SeedData();
 app.MapControllers();
 
 app.Run();
-    

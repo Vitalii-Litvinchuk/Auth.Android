@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.newmail.constants.Urls;
@@ -28,6 +29,7 @@ import retrofit2.Response;
 public class MainActivity extends EasierActivity {
     private ImageRequester imageRequester;
     private NetworkImageView myImage;
+    private TextView textView;
 
     // constant to compare
     // the activity result code
@@ -41,7 +43,7 @@ public class MainActivity extends EasierActivity {
         setContentView(R.layout.activity_main);
 
         imageRequester = ImageRequester.getInstance();
-        myImage = findViewById(R.id.myimgRegister);
+        myImage = findViewById(R.id.myimg);
         String urlImg = Urls.BASE + "/images/1.jpg";
         imageRequester.setImageFromUrl(myImage, urlImg);
 //        HomeApplication.getInstance().deleteToken();

@@ -2,6 +2,7 @@ package com.example.newmail.network;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 import android.util.LruCache;
 
@@ -10,6 +11,12 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.example.newmail.application.HomeApplication;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ImageRequester {
     private static ImageRequester instance = null;
@@ -63,6 +70,18 @@ public class ImageRequester {
      */
     public void setImageFromUrl(NetworkImageView networkImageView, String url) {
         networkImageView.setImageUrl(url, imageLoader);
+    }
+
+    public Bitmap getBitmap(String url) {
+        Bitmap bitmap = null;
+        InputStream inputStream;
+        try {
+            inputStream = new java.net.URL(url).openStream();
+            bitmap = BitmapFactory.decodeStream(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
     private int calculateMaxByteSize() {

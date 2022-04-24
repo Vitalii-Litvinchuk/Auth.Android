@@ -18,11 +18,18 @@ import java.util.List;
 
 import lombok.NonNull;
 
-public class UserAdapter extends RecyclerView.Adapter<UserCardViewHolder> {
+public class UsersAdapter extends RecyclerView.Adapter<UserCardViewHolder> {
     private List<UserDTO> modelList;
+    private final OnItemClickListener listener;
+    private final OnItemClickListener editUser;
 
-    public UserAdapter(List<UserDTO> modelList) {
-        this.modelList = modelList;
+
+    public UsersAdapter(List<UserDTO> users,
+                        OnItemClickListener listener,
+                        OnItemClickListener editUser) {
+        this.modelList = users;
+        this.listener=listener;
+        this.editUser=editUser;
     }
 
     @NonNull
@@ -46,6 +53,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserCardViewHolder> {
                     //.circleCrop()
                     .apply(new RequestOptions().override(300, 300))
                     .into(holder.userPhoto);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(model);
+                }
+            });
+
+            holder.userEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    editUser.onItemClick(model);
+                }
+            });
         }
     }
 

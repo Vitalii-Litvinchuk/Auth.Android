@@ -166,18 +166,9 @@ public class RegisterActivity extends EasierActivity {
                 Bitmap bitmap = null;
 
                 try {
-                    bitmap = Picasso.get()
-                            .load(uri)
-                                                   .resize(100, 100)
-//                            .centerCrop()
-                            .get();
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 } catch (IOException e) {
-//                    e.printStackTrace();
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+                    e.printStackTrace();
                 }
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();

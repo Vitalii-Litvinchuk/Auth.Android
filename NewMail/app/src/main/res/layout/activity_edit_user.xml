@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".account.EditUserActivity"
+        tools:ignore="ExtraText">
+
+        <TextView
+            android:id="@+id/textEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Змінити користувача"
+            android:textSize="26dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--    Email    -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Електронна пошта"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textEdit">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtEmailEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    First name    -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Ім'я"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/emailEdit">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtFirstNameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    Second name    -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/secondNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Прізвище"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/firstNameEdit">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtSecondNameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    Phone    -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Номер телефону"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/secondNameEdit">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtPhoneEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:onClick="handleClick"
+            android:text="Змінити"
+            app:layout_constraintEnd_toEndOf="@+id/myimgEdit"
+            app:layout_constraintStart_toStartOf="@+id/myimgEdit"
+            app:layout_constraintTop_toBottomOf="@+id/myimgEdit" />
+
+        <ProgressBar
+            android:id="@+id/progBarEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myimgEdit" />
+
+        <ImageView
+            android:id="@+id/myimgEdit"
+            android:layout_width="200dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="120dp"
+            app:layout_constraintEnd_toEndOf="@+id/BSelectImageEdit"
+            app:layout_constraintStart_toStartOf="@+id/BSelectImageEdit"
+            app:layout_constraintTop_toBottomOf="@+id/phoneEdit" />
+
+        <TextView
+            android:id="@+id/imgErrorEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/myimgEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/BSelectImageEdit"
+            app:layout_constraintVertical_bias="0.8"></TextView>
+
+        <Button
+            android:id="@+id/BSelectImageEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:onClick="onSelectImage"
+            android:text="SELECT IMAGE"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonEdit"
+            app:layout_constraintEnd_toEndOf="@+id/phoneEdit"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="@+id/phoneEdit"
+            app:layout_constraintTop_toBottomOf="@+id/phoneEdit"
+            app:layout_constraintVertical_bias="0.121" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+

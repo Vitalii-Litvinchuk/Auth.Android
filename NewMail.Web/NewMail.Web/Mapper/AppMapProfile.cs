@@ -16,6 +16,10 @@ namespace NewMail.Web.Mapper
             CreateMap<AppUser, UserItemViewModel>()
                 .ForMember(x => x.Photo, opt => opt.MapFrom(x => $"/images/{x.Photo}"))
                 .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.PhoneNumber));
+
+            CreateMap<AppUser, EditUser>()
+                .ForMember(x => x.Photo, opt => opt.MapFrom(x => $"/images/{x.Photo}"))
+                .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.PhoneNumber));
         }
     }
 }

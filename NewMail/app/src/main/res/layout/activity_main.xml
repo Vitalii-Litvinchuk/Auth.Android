@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/myimgRegister"
+        android:id="@+id/myimg"
         android:layout_width="200dp"
         android:layout_height="120dp"
         android:layout_marginTop="52dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/BSelectImageRegister"
+        android:id="@+id/BSelectImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -29,16 +29,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myimgRegister"
+        app:layout_constraintTop_toBottomOf="@+id/myimg"
         app:layout_constraintVertical_bias="0.551" />
 
     <ImageView
         android:id="@+id/IVPreviewImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@id/BSelectImageRegister"
+        android:layout_below="@id/BSelectImage"
         android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BSelectImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
