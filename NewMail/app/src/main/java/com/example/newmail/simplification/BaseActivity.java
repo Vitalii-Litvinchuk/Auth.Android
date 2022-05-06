@@ -18,7 +18,7 @@ import com.example.newmail.account.UsersActivity;
 import com.example.newmail.application.HomeApplication;
 import com.example.newmail.network.ConnectionDetector;
 
-public class EasierActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
     private static int openedId = R.id.m_main;
     private static boolean isGroupAuthVisible = !HomeApplication.getInstance().isAuth();
     private static boolean isGroupActionVisible = HomeApplication.getInstance().isAuth();
@@ -26,23 +26,21 @@ public class EasierActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        String classname = getClass().getName();
-        switch (classname) {
-            case "com.example.newmail.MainActivity":
+        String[] classname = getClass().getName().split("\\.");
+        switch (classname[classname.length - 1]) {
+            case "MainActivity":
                 Id = R.id.m_main;
                 break;
-            case "com.example.newmail.account.LoginActivity":
+            case "LoginActivity":
                 Id = R.id.m_login;
                 break;
-            case "com.example.newmail.account.RegisterActivity":
+            case "RegisterActivity":
                 Id = R.id.m_register;
                 break;
-            case "com.example.newmail.account.UsersActivity":
+            case "UsersActivity":
                 Id = R.id.m_users;
                 break;
-            default:
-                Id = 0;
-                break;
+            default: break;
         }
         super.onCreate(savedInstanceState);
     }
@@ -74,6 +72,7 @@ public class EasierActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if  (Id != R.id.m_main) finish();
         if (isGroupAuthVisible) {
             return authGroup(item);
         }
@@ -112,17 +111,14 @@ public class EasierActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.m_register:
-                openedId = R.id.m_register;
                 intent = new Intent(this, RegisterActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.m_login:
-                openedId = R.id.m_login;
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.m_main:
-                openedId = R.id.m_main;
                 openMainActivity();
                 return true;
             default:
@@ -134,17 +130,14 @@ public class EasierActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.m_users:
-                openedId = R.id.m_users;
                 intent = new Intent(this, UsersActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.m_logout:
-                openMainActivity();
-                openedId = R.id.m_main;
                 logout();
+                openMainActivity();
                 return true;
             case R.id.m_main:
-                openedId = R.id.m_main;
                 openMainActivity();
                 return true;
             default:

@@ -1,29 +1,24 @@
 package com.example.newmail.account;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.newmail.R;
 import com.example.newmail.application.HomeApplication;
-import com.example.newmail.constants.Methods;
 import com.example.newmail.constants.TextInputHelper;
 import com.example.newmail.constants.Urls;
 import com.example.newmail.network.request.DTOs.AccountDTOs.UserDTO;
 import com.example.newmail.network.request.DTOs.AccountDTOs.UserResponseDTO;
 import com.example.newmail.network.request.RequestService;
+import com.example.newmail.simplification.BaseActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ViewUserActivity extends AppCompatActivity {
+public class ViewUserActivity extends BaseActivity {
     private long Id;
     private UserDTO user;
 

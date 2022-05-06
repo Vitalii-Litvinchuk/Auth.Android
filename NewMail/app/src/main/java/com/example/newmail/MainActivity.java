@@ -12,12 +12,13 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.newmail.constants.Urls;
-import com.example.newmail.network.ConnectionDetector;
-import com.example.newmail.simplification.EasierActivity;
+import com.example.newmail.simplification.BaseActivity;
 import com.example.newmail.network.ImageRequester;
 import com.example.newmail.network.request.DTOs.ImageDTOs.ImageDTO;
 import com.example.newmail.network.request.DTOs.ImageDTOs.ImageResponseDTO;
 import com.example.newmail.network.request.RequestService;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends EasierActivity {
+public class MainActivity extends BaseActivity {
     private ImageRequester imageRequester;
     private NetworkImageView myImage;
     private TextView textView;
@@ -55,33 +56,40 @@ public class MainActivity extends EasierActivity {
     }
 
     void imageChooser() {
-
         // create an instance of the
         // intent of the type image
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
+//        Intent i = new Intent();
+//        i.setType("image/*");
+//        i.setAction(Intent.ACTION_GET_CONTENT);
 
-        // pass the constant to compare it
-        // with the returned requestCode
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+//         pass the constant to compare it
+//         with the returned requestCode
+//        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
+
     }
 
     // this function is triggered when user
     // selects the image from the imageChooser
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
 
-        if (resultCode == RESULT_OK) {
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
-            if (requestCode == SELECT_PICTURE) {
+                // compare the resultCode with the
+                // SELECT_PICTURE constant
+//            if (requestCode == SELECT_PICTURE) {
+
                 // Get the url of the image from data
-                Uri uri = data.getData();
                 // update the preview image in the layout
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                Uri uri = result.getUri();
                 IVPreviewImage.setImageURI(uri);
 
                 Bitmap bitmap = null;
+
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 } catch (IOException e) {
@@ -98,7 +106,6 @@ public class MainActivity extends EasierActivity {
 
                 ImageDTO imageDTO = new ImageDTO();
                 imageDTO.setImage(sImage);
-
                 RequestService.getInstance().jsonImageApi().uploadImage(imageDTO)
                         .enqueue(new Callback<ImageResponseDTO>() {
                             @Override
@@ -112,6 +119,7 @@ public class MainActivity extends EasierActivity {
                             public void onFailure(Call<ImageResponseDTO> call, Throwable t) {
                             }
                         });
+//            }
             }
         }
     }

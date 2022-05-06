@@ -1,7 +1,5 @@
 package com.example.newmail.account;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -27,7 +25,7 @@ import com.example.newmail.network.request.DTOs.AccountDTOs.MessageResponseDTO;
 import com.example.newmail.network.request.DTOs.AccountDTOs.UserDTO;
 import com.example.newmail.network.request.DTOs.AccountDTOs.UserResponseDTO;
 import com.example.newmail.network.request.RequestService;
-import com.example.newmail.simplification.EasierActivity;
+import com.example.newmail.simplification.BaseActivity;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
@@ -37,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditUserActivity extends EasierActivity {
+public class EditUserActivity extends BaseActivity {
     private TextView imgError;
     private ProgressBar progBar;
     private Button btn;

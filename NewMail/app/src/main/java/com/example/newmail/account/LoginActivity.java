@@ -1,19 +1,17 @@
 package com.example.newmail.account;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.newmail.MainActivity;
 import com.example.newmail.R;
 import com.example.newmail.application.HomeApplication;
 import com.example.newmail.constants.Methods;
 import com.example.newmail.constants.TextInputHelper;
 import com.example.newmail.constants.Validator;
-import com.example.newmail.simplification.EasierActivity;
+import com.example.newmail.simplification.BaseActivity;
 import com.example.newmail.network.request.DTOs.AccountDTOs.AccountResponseDTO;
 import com.example.newmail.network.request.DTOs.AccountDTOs.ErrorDTO;
 import com.example.newmail.network.request.DTOs.AccountDTOs.LoginDTO;
@@ -25,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends EasierActivity {
+public class LoginActivity extends BaseActivity {
     TextView txt;
     ProgressBar progBar;
     Button btn;
@@ -43,6 +41,9 @@ public class LoginActivity extends EasierActivity {
 
         email = new TextInputHelper(findViewById(R.id.emailLogin), findViewById(R.id.txtEmailLogin));
         password = new TextInputHelper(findViewById(R.id.passwordLogin), findViewById(R.id.txtPasswordLogin));
+
+        email.editText.setText("qwerty@qwe.rty");
+        password.editText.setText("qwerty");
     }
 
     public void handleClick(View view) {

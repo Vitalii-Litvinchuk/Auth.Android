@@ -93,7 +93,8 @@ namespace NewMail.Web.Controllers
         {
             if (model != null)
             {
-                var user = await _context.Users.FindAsync(long.Parse(model.Id));
+                //var user = await _context.Users.FindAsync(long.Parse(model.Id));
+                var user = await _userManager.FindByIdAsync(model.Id);
                 if (user != null)
                 {
                     if (!String.IsNullOrEmpty(model.FirstName) && !user.FirstName.Equals(model.FirstName))
@@ -118,8 +119,9 @@ namespace NewMail.Web.Controllers
                     if (!String.IsNullOrEmpty(model.Phone) && !user.PhoneNumber.Equals(model.Phone))
                         user.PhoneNumber = model.Phone;
 
-                    _context.Users.Update(user);
-                    await _context.SaveChangesAsync();
+                    await _userManager.UpdateAsync(user);
+                    //_context.Users.Update(user);
+                    //await _context.SaveChangesAsync();
                     return Ok(new { message = "Успішно змінено" });
                 }
             }

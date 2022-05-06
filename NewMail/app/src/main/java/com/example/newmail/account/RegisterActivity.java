@@ -12,20 +12,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.newmail.MainActivity;
 import com.example.newmail.R;
 import com.example.newmail.application.HomeApplication;
 import com.example.newmail.constants.Methods;
 import com.example.newmail.constants.TextInputHelper;
 import com.example.newmail.constants.Validator;
-import com.example.newmail.simplification.EasierActivity;
+import com.example.newmail.simplification.BaseActivity;
 import com.example.newmail.network.request.DTOs.AccountDTOs.RegisterDTO;
 import com.example.newmail.network.request.DTOs.AccountDTOs.ErrorDTO;
 import com.example.newmail.network.request.DTOs.AccountDTOs.AccountResponseDTO;
 import com.example.newmail.network.request.RequestService;
 import com.example.newmail.security.JwtSecurityService;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends EasierActivity {
+public class RegisterActivity extends BaseActivity {
     TextView imgError;
     ProgressBar progBar;
     Button btn;
@@ -58,7 +58,6 @@ public class RegisterActivity extends EasierActivity {
 
         progBar = findViewById(R.id.progBarRegister);
         btn = findViewById(R.id.buttonRegister);
-
 
         email = new TextInputHelper(findViewById(R.id.emailRegister), findViewById(R.id.txtEmailRegister));
         firstName = new TextInputHelper(findViewById(R.id.firstNameRegister), findViewById(R.id.txtFirstNameRegister));
@@ -150,19 +149,22 @@ public class RegisterActivity extends EasierActivity {
     }
 
     void imageChooser() {
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+//        Intent i = new Intent();
+//        i.setType("image/*");
+//        i.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Uri uri = data.getData();
-
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+//            if (requestCode == SELECT_PICTURE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                Uri uri = result.getUri();
                 Bitmap bitmap = null;
 
                 try {
@@ -177,6 +179,7 @@ public class RegisterActivity extends EasierActivity {
                 String sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
                 photoBase64 = sImage;
                 myImage.setImageBitmap(bitmap);
+//            }
             }
         }
     }

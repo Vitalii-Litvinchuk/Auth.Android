@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/activity_cropper.xml" value="0.24094202898550723" />
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/activity_edit_user.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/activity_login.xml" value="0.19746376811594202" />
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/activity_main.xml" value="0.264" />
@@ -11,6 +12,7 @@
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/activity_user.xml" value="0.223731884057971" />
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/activity_users.xml" value="0.4" />
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/activity_view_user.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/cropper.xml" value="0.24094202898550723" />
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/simplle_text.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/layout/user_card.xml" value="0.223731884057971" />
         <entry key="..\:/AndroidApps/AndroidNewMail/NewMail/app/src/main/res/menu/main.xml" value="0.25416666666666665" />

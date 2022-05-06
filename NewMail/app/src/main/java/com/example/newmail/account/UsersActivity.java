@@ -6,13 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.newmail.R;
 import com.example.newmail.UserView.UsersAdapter;
-import com.example.newmail.application.HomeApplication;
 import com.example.newmail.network.request.DTOs.AccountDTOs.UserDTO;
-import com.example.newmail.simplification.EasierActivity;
+import com.example.newmail.simplification.BaseActivity;
 import com.example.newmail.network.request.DTOs.AccountDTOs.UsersResponseDTO;
 import com.example.newmail.network.request.RequestService;
 
@@ -20,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UsersActivity extends EasierActivity {
+public class UsersActivity extends BaseActivity {
 
     private UsersAdapter adapter;
     private RecyclerView recyclerView;
